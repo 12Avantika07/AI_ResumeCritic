@@ -1,0 +1,71 @@
+AVANTIKA SHUKLA
+Software Engineer | AI/ML Enthusiast
+avantika.shukla@email.com | +91-9876543210 | LinkedIn: linkedin.com/in/avantika-shukla | GitHub: github.com/avantika-shukla
+
+PROFESSIONAL SUMMARY
+Motivated and detail-oriented Software Engineer with 2+ years of experience in Python development, machine learning, and web technologies. Proficient in building scalable applications and data-driven solutions. Looking to leverage my skills in a challenging role at a forward-thinking technology company.
+
+EDUCATION
+Bachelor of Technology in Computer Science
+MirAI School of Technology | 2022 - 2026
+CGPA: 8.5/10
+Relevant Coursework: Data Structures & Algorithms, Machine Learning, Database Management Systems, Operating Systems, Computer Networks, Software Engineering
+
+TECHNICAL SKILLS
+Programming Languages: Python, Java, C++, JavaScript, SQL
+Web Technologies: HTML, CSS, React.js, Node.js, Flask, Streamlit
+Machine Learning & AI: TensorFlow, Keras, Scikit-learn, OpenCV, NLP, Pandas, NumPy
+Databases: MySQL, PostgreSQL, MongoDB, Firebase
+Tools & Platforms: Git, GitHub, Docker, AWS (EC2, S3), Linux, VS Code, Jupyter Notebook
+Other: REST APIs, Agile Methodology, Unit Testing, CI/CD
+
+EXPERIENCE
+Software Engineering Intern
+TechCorp Solutions | May 2024 - August 2024
+- Worked on developing REST APIs using Flask and Python
+- Built data pipelines for processing large datasets
+- Collaborated with the team on frontend using React.js
+- Participated in code reviews and agile sprints
+- Improved API response time
+
+Machine Learning Intern
+DataWise Analytics | January 2024 - April 2024
+- Developed machine learning models for customer churn prediction
+- Preprocessed and cleaned datasets using Pandas and NumPy
+- Created data visualizations using Matplotlib and Seaborn
+- Achieved good accuracy on the prediction model
+- Documented the entire ML pipeline
+
+PROJECTS
+AI-Powered Resume Analyzer | Python, Streamlit, Groq API
+- Built a web application that analyzes resumes using AI
+- Implemented ATS scoring and job matching algorithms
+- Created interactive dashboards with Plotly charts
+- The project got positive feedback from peers
+
+E-Commerce Platform | React.js, Node.js, MongoDB
+- Developed a full-stack e-commerce web application
+- Implemented user authentication and payment integration
+- Designed responsive UI components using CSS
+- Deployed on AWS
+
+Smart Attendance System | Python, OpenCV, Firebase
+- Created a face recognition-based attendance system
+- Used OpenCV for facial detection and recognition
+- Stored attendance data in Firebase Realtime Database
+- Built an admin dashboard for monitoring
+
+CERTIFICATIONS
+- Python for Data Science - NPTEL (2023)
+- AWS Cloud Practitioner - AWS (2024)
+- Machine Learning Specialization - Coursera (2024)
+
+ACHIEVEMENTS
+- Won 2nd prize in college hackathon (2023)
+- Published a technical blog on Medium about ML deployment
+- Active contributor to open-source projects on GitHub
+
+EXTRACURRICULAR ACTIVITIES
+- Member of the college coding club
+- Organized a workshop on Python for beginners
+- Participated in Google Developer Student Clubs events
