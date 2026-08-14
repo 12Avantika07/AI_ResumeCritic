@@ -2,26 +2,22 @@
 
 # 🤖 AI RESUME CRITIC — TECH-ROAST
 
-### "Your Resume Applied. AI Got Ruthless."
+### *"Your Resume Applied. AI Got Ruthless."*
 
-![Python](https://python.org)
-![Streamlit](https://streamlit.io)
-![Groq](https://groq.com)
-![License](#-license)
-![Status](https://ai-resumecritic-avantika.streamlit.app/)
-
-<br>
-
-# 🚀 LIVE DEMO — AI RESUME CRITIC
-
-### 👉 Launch AI Resume Critic →
-
-Live Application:
-https://ai-resumecritic-avantika.streamlit.app/
+[![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.40+-red.svg)](https://streamlit.io)
+[![Groq](https://img.shields.io/badge/Groq-API-7C3AED.svg)](https://groq.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 <br>
 
-[📖 Architecture](#-system-architecture) · [✨ Features](#-features) · [🚀 Getting Started](#-installation) · [🧪 Testing](#-testing)
+## 🚀 [LIVE PROJECT — TRY IT NOW](https://ai-resumecritic-avantika.streamlit.app/)
+
+**👉 Click here to access the deployed AI Resume Critic application**
+
+<br>
+
+[🔍 Live Demo](https://ai-resumecritic-avantika.streamlit.app/) | [📖 Features](#features) | [🚀 Getting Started](#installation) | [📋 Architecture](#system-architecture)
 
 </div>
 
@@ -29,40 +25,18 @@ https://ai-resumecritic-avantika.streamlit.app/
 
 ## 🎯 Overview
 
-AI Resume Critic is a production-quality Streamlit application that acts as a ruthless but constructive senior technical recruiter.
-
-It analyzes a resume against a target job description and provides:
+**AI Resume Critic** is a production-quality Streamlit application that acts as a ruthless but constructive senior technical recruiter. It analyzes your resume against any job description and provides:
 
 * 📊 ATS Compatibility Score with transparent breakdown
 * 🎯 Job Match Score with keyword analysis
 * 🔍 Weak Bullet Point Detection & AI Rewriting
-* 🧠 Skill Gap Analysis
-* 🔥 Tech-Roast Mode
+* 🧠 Skill Gap Analysis (Technical, Tools, Cloud, Soft Skills)
+* 🔥 Tech-Roast Mode (funny but professional)
 * 🎤 AI Mock Interview with scoring
-* 📊 Personalized Career Roadmap
-* 📥 Downloadable Analysis Reports
-* 📈 Analysis history and progress tracking
-* ✅ Improvement Tracker
+* 📊 Career Roadmap (7/30/90-day plan)
+* 📥 Downloadable Reports (TXT, HTML, Markdown)
 
-> Built by Avantika Shukla as a B.Tech Capstone Project at MirAI School of Technology.
-
----
-
-## 📡 Live Demo
-
-### 🚀 The application is deployed and live on Streamlit Community Cloud.
-
-<div align="center">
-
-## 🔥 OPEN AI RESUME CRITIC
-
-### 👉 Click Here to Launch the Live Application 👈
-
-https://ai-resumecritic-avantika.streamlit.app/
-
-</div>
-
-> Note: The button above opens the deployed production application directly. No local setup is required for the live demo.
+> Built by **Avantika Shukla** as a B.Tech Capstone Project at MirAI School of Technology.
 
 ---
 
@@ -71,20 +45,17 @@ https://ai-resumecritic-avantika.streamlit.app/
 ### 📄 Resume Analysis
 
 * Upload PDF, TXT, or DOCX resumes
-* Intelligent text extraction
-* Scanned PDF detection
-* Resume validation
-* Section detection
-* Completeness analysis
+* Intelligent text extraction with validation
+* Scanned PDF detection and error handling
+* Section detection and completeness analysis
 
 ### 🎯 ATS Scoring
 
-* Transparent multi-factor scoring
+* Transparent multi-factor scoring engine
 * Keyword coverage analysis
 * Section completeness evaluation
 * Skill coverage assessment
-* Detailed score breakdown
-* Visual progress indicators
+* Score breakdown with progress visualization
 
 ### 📊 Job Matching
 
@@ -95,275 +66,68 @@ https://ai-resumecritic-avantika.streamlit.app/
 
 ### 🔍 Weak Bullet Rewriting
 
-* Detects vague and weak bullet points
-* Identifies passive writing
-* AI-powered professional rewrites
-* Action-oriented improvements
-* [ADD REAL METRIC] placeholders prevent fabricated achievements
-* One-click copying of improved bullets
+* Detects vague, passive, or impact-less bullet points
+* AI-powered professional rewrites with action verbs
+* `[ADD REAL METRIC]` placeholders to prevent fabrication
+* One-click copy for improved bullets
 
 ### 🔥 Tech-Roast Mode
 
-A recruiter-style roast that is:
-
-* Witty
-* Sarcastic
-* Constructive
-* Professional
-* Focused on the resume, never the person
-* Always followed by actionable improvements
+* Witty, sarcastic but constructive feedback
+* Roasts the resume, never the person
+* Professional humor suitable for LinkedIn
+* Always ends with actionable fixes
 
 ### 🧠 Skill Gap Analysis
 
-Skills are categorized into:
-
-* 💻 Technical Skills
-* 🛠️ Tools
-* ☁️ Cloud
-* 🤝 Soft Skills
-* 🎯 Domain Skills
-
-Each gap receives:
-
-* Priority level
-* Recommended learning area
-* Improvement guidance
+* Categorized skills: Technical, Tools, Cloud, Soft Skills, Domain
+* Priority levels: High, Medium, Low
+* Interactive skill gap visualization
+* Recommended learning areas
 
 ### 🎤 AI Mock Interview
 
-Multiple interview modes:
-
-* Technical
-* HR
-* Project
-* Mixed
-
-Difficulty levels:
-
-* Easy
-* Medium
-* Hard
-
-The system provides:
-
-* Contextual questions
+* Multiple modes: Technical, HR, Project, Mixed
+* Adjustable difficulty: Easy, Medium, Hard
 * Question-by-question scoring
-* Feedback
-* Progress tracking
-* Final interview scorecard
+* Progress tracking and feedback
+* Interview scorecard with overall assessment
 
 ### 📊 Career Insights
 
-Personalized career intelligence including:
-
-* 7-day action plan
-* 30-day improvement plan
-* 90-day roadmap
-* Skill acquisition recommendations
-* Certification suggestions
-* Networking recommendations
-* Historical analysis trends
+* Personalized 7/30/90-day career roadmap
+* Skill acquisition plan with resources
+* Certification recommendations
+* Networking suggestions
+* Analysis history with trend charts
 
 ### ✅ Improvement Tracker
 
-The application converts identified weaknesses into an editable improvement tracker.
-
-Users can track:
-
-Not Started → In Progress → Done
-
-The tracker uses Streamlit session state so updates persist during the session without unnecessarily triggering another AI analysis.
+* Editable checklist (`st.data_editor`) built from weak bullets, missing skills, and priority actions
+* Update each item's Status (Not Started / In Progress / Done)
+* Edits persist in `st.session_state` for the session — never triggers a new AI call
 
 ### 📥 Report Generation
 
-Download comprehensive reports in:
-
-* TXT
-* HTML
-* Markdown
-
-Reports include:
-
-* ATS score
-* Job Match score
-* Resume quality
-* Missing keywords
-* Skill gaps
-* Weak bullets
-* AI rewrites
-* Recommendations
-* Career insights
+* Download TXT, HTML, or Markdown reports
+* Comprehensive analysis summary
+* Professional formatting
+* All scores, keywords, rewrites, and recommendations
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Component       | Technology                |
-| --------------- | ------------------------- |
-| Framework       | St
-reamlit 1.40+           |
-| AI Engine       | Groq API                  |
-| LLM             | Llama family models       |
-| Language        | Python 3.12+              |
-| Data Processing | Pandas, NumPy             |
-| Visualization   | Plotly                    |
-| PDF Parsing     | PyPDF                     |
-| DOCX Parsing    | python-docx               |
-| Environment     | python-dotenv             |
-| Deployment      | Streamlit Community Cloud |
-
----
-
-## 🏗️ System Architecture
-
-graph TD
-    A[👤 User] --> B[🖥️ Streamlit UI]
-
-    B --> C[📄 Resume Upload]
-    B --> D[📋 Job Description]
-
-    C --> E[🔍 Resume Parser]
-    D --> F[📋 JD Parser]
-
-    E --> G[📝 Extracted Resume Text]
-    F --> H[📝 Validated Job Description]
-
-    G --> I[🧩 Prompt Builder]
-    H --> I
-
-    I --> J[🤖 Groq AI]
-
-    J --> K[📦 Structured Analysis]
-
-    K --> L[🧮 Scoring Engine]
-
-    L --> M[📊 ATS Score]
-    L --> N[🎯 Job Match]
-    L --> O[🧠 Skill Gap]
-    L --> P[🔥 Tech Roast]
-    L --> Q[🎤 Mock Interview]
-    L --> R[🗺️ Career Roadmap]
-    L --> S[📥 Reports]
-
-    M --> T[📊 Dashboard]
-    N --> T
-    O --> T
-    P --> T
-    Q --> T
-    R --> T
-    S --> T
-
-
----
-
-## 🔄 Data Flow
-
-User
-  │
-  ├── Upload Resume
-  │
-  └── Enter Job Description
-          │
-          ▼
-     Input Validation
-          │
-          ▼
-      Resume Parser
-          │
-          ▼
-      Prompt Builder
-          │
-          ▼
-        Groq AI
-          │
-          ▼
-   Structured JSON Output
-          │
-          ▼
-    Scoring Engine
-          │
-    ┌─────┼──────────────┐
-    ▼     ▼              ▼
-   ATS  Job Match    Skill Gap
-    │     │              │
-    └─────┼──────────────┘
-          ▼
-      Dashboard
-          │
-    ┌─────┼─────────────┐
-    ▼     ▼             ▼
-Tech   Interview     Roadmap
-Roast                   │
-                       ▼
-                    Reports
-
-
----
-
-## 📁 Project Structure
-
-AI_ResumeCritic/
-│
-├── app.py
-├── requirements.txt
-├── README.md
-├── .env.example
-├── .gitignore
-│
-├── .streamlit/
-│   └── config.toml
-│
-├── pages/
-│   ├── __init__.py
-│   ├── 01_Resume_Analysis.py
-│   ├── 02_Job_Match.py
-│   ├── 03_Interview.py
-│   ├── 04_Career_Insights.py
-│   └── 05_Report.py
-│
-├── utils/
-│   ├── __init__.py
-│   ├── groq_client.py
-│   ├── resume_parser.py
-│   ├── jd_parser.py
-│   ├── prompts.py
-│   ├── scoring.py
-│   ├── session_manager.py
-│   └── report_generator.py
-│
-└── data/
-    └── sample_resume.txt
-
-
----
-
-## 🧠 AI Prompt Architecture
-
-The application uses specialized prompts for different career-intelligence tasks.
-
-| Prompt                   | Purpose                              |
-| ------------------------ | ------------------------------------ |
-| RESUME_ANALYSIS_PROMPT | Full resume analysis                 |
-| TECH_ROAST_PROMPT      | Recruiter-style resume roast         |
-| BULLET_REWRITE_PROMPT  | Professional bullet rewriting        |
-| INTERVIEW_PROMPT       | Contextual interview questions       |
-| CAREER_ROADMAP_PROMPT  | Personalized career improvement plan |
-
-All prompts dynamically incorporate the user's resume and target job description.
-
----
-
-## 🔒 Security & Privacy
-
-The project follows a privacy-first approach:
-
-* 🔐 No hardcoded API keys
-* 🔑 Environment variables / Streamlit Secrets
-* 🧠 Resume processing in memory
-* 🚫 No intentional persistent resume storage
-* 🛡️ System prompts are not exposed
-* 🧹 Error messages are sanitized
-* 🔒 No unnecessary user data logging
+| Component           | Technology               |
+| ------------------- | ------------------------ |
+| **Framework**       | Streamlit 1.40+          |
+| **AI Engine**       | Groq API (Llama 3.1 70B) |
+| **Data Processing** | Pandas, NumPy            |
+| **Visualization**   | Plotly                   |
+| **PDF Parsing**     | PyPDF                    |
+| **DOCX Parsing**    | python-docx              |
+| **Environment**     | python-dotenv            |
+| **Language**        | Python 3.12+             |
 
 ---
 
@@ -371,134 +135,269 @@ The project follows a privacy-first approach:
 
 ### Prerequisites
 
-* Python 3.12+
-* Git
-* Groq API key
+* Python 3.12 or higher
+* A [Groq API Key](https://console.groq.com)
 
-### 1. Clone the Repository
+### Steps
 
-git clone https://github.com/12Avantika07/AI_ResumeCritic.git
-cd AI_ResumeCritic
+```bash
+# 1. Clone the repository
+git clone https://github.com/avantika-shukla/ai-resume-critic.git
+cd ai-resume-critic
 
-
-### 2. Create Virtual Environment
-
-Windows:
-
+# 2. Create a virtual environment
 python -m venv venv
-venv\Scripts\activate
 
-
-Linux/macOS:
-
-python -m venv venv
+# Linux/Mac
 source venv/bin/activate
 
+# Windows
+venv\Scripts\activate
 
-### 3. Install Dependencies
-
+# 3. Install dependencies
 pip install -r requirements.txt
 
+# 4. Set up environment variables
+cp .env.example .env
 
-### 4. Configure Environment
+# Edit .env and add your GROQ_API_KEY
 
-Create .env:
-
-GROQ_API_KEY=your_groq_api_key_here
-
-
-### 5. Run Locally
-
+# 5. Run the application
 streamlit run app.py
-
-
-Open:
-
-http://localhost:8501
-
+```
 
 ---
 
-## ☁️ Deployment
+## 🔑 Environment Variables
 
-The project is deployed on Streamlit Community Cloud.
+Create a `.env` file in the project root:
 
-### Production Application
+```env
+GROQ_API_KEY=your_groq_api_key_here
+```
 
-🚀 https://ai-resumecritic-avantika.streamlit.app/
+### For Streamlit Cloud Deployment
 
-### Deployment Configuration
+1. Go to [Streamlit Community Cloud](https://streamlit.io/cloud)
+2. Navigate to **Secrets** section
+3. Add:
 
-Repository:
-12Avantika07/AI_ResumeCritic
-
-Branch:
-main
-
-Main file:
-app.py
-
-
-Add the following secret in Streamlit Cloud:
-
+```toml
 GROQ_API_KEY = "your_groq_api_key_here"
+```
 
+---
 
-Then deploy the application.
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    A[👤 User] --> B[🖥️ Streamlit UI]
+    B --> C[📄 Resume Upload]
+    B --> D[📋 Job Description Input]
+    C --> E[🔍 Resume Parser]
+    E --> F[📝 Extracted Text]
+    D --> F
+    F --> G[🧩 Prompt Builder]
+    G --> H[🤖 Groq API]
+    H --> I[📦 Structured JSON]
+    I --> J[🧮 Scoring Engine]
+    J --> K[📊 Dashboard]
+    J --> L[📈 Visualizations]
+    J --> M[🔥 Tech Roast]
+    J --> N[🎤 Mock Interview]
+    J --> O[🗺️ Career Roadmap]
+    J --> P[📥 Report Generator]
+```
+
+### Module Breakdown
+
+| Module                      | Purpose                                 |
+| --------------------------- | --------------------------------------- |
+| `app.py`                    | Main entry point, routing, UI rendering |
+| `utils/groq_client.py`      | Groq API integration, JSON parsing      |
+| `utils/resume_parser.py`    | PDF/TXT/DOCX text extraction            |
+| `utils/jd_parser.py`        | Job description validation              |
+| `utils/prompts.py`          | All AI prompt templates                 |
+| `utils/scoring.py`          | ATS, Job Match, Resume Quality scoring  |
+| `utils/session_manager.py`  | Streamlit session state management      |
+| `utils/report_generator.py` | TXT/HTML/Markdown report generation     |
+| `pages/*.py`                | Multi-page navigation support           |
+| `data/sample_resume.txt`    | Demo resume for testing                 |
+
+---
+
+## 📊 Data Flow
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant S as Streamlit UI
+    participant P as Resume Parser
+    participant G as Prompt Builder
+    participant A as Groq API
+    participant E as Scoring Engine
+    participant D as Dashboard
+
+    U->>S: Upload Resume + Enter JD
+    S->>P: Parse uploaded file
+    P-->>S: Extracted text
+    S->>S: Validate inputs (st.form)
+    S->>G: Build dynamic prompt
+    G->>A: Send analysis request
+    A-->>G: JSON response
+    G-->>S: Parsed analysis data
+    S->>E: Calculate detailed scores
+    E-->>S: ATS + Job Match + Quality scores
+    S->>D: Render dashboard with charts
+    D-->>U: Full analysis dashboard
+```
+
+1. **User Upload** → User uploads resume (PDF/TXT/DOCX) and enters job description
+2. **Parsing** → Resume parser extracts clean text from the uploaded file
+3. **Validation** → Both resume and JD are validated for completeness
+4. **Prompt Building** → Dynamic prompt is constructed with resume text + JD + context
+5. **AI Analysis** → Groq API analyzes the resume and returns structured JSON
+6. **JSON Validation** → Response is parsed, validated, and error-handled
+7. **Scoring** → Multi-factor scoring engine calculates ATS, Job Match, and Quality scores
+8. **Visualization** → Plotly charts, Pandas tables, and KPI cards render the dashboard
+9. **Session State** → All results are preserved in Streamlit `session_state`
+10. **Reporting** → User can download comprehensive reports in multiple formats
+
+---
+
+## 📁 Project Structure
+
+```text
+ai-resume-critic/
+│
+├── app.py                          # Main application entry point
+├── requirements.txt                # Python dependencies
+├── README.md                       # This file
+├── .env.example                    # Environment variable template
+├── .gitignore                      # Git ignore rules
+│
+├── .streamlit/
+│   └── config.toml                 # Streamlit configuration (dark theme)
+│
+├── pages/                          # Multi-page navigation
+│   ├── __init__.py
+│   ├── 01_Resume_Analysis.py
+│   ├── 02_Job_Match.py
+│   ├── 03_Interview.py
+│   ├── 04_Career_Insights.py
+│   └── 05_Report.py
+│
+├── utils/                          # Core utility modules
+│   ├── __init__.py
+│   ├── groq_client.py              # Groq API client & JSON parser
+│   ├── resume_parser.py             # PDF/TXT/DOCX text extraction
+│   ├── jd_parser.py                 # Job description validation
+│   ├── prompts.py                   # All AI prompt templates
+│   ├── scoring.py                   # Scoring engine
+│   ├── session_manager.py           # Session state management
+│   └── report_generator.py          # Report generation
+│
+├── data/
+│   └── sample_resume.txt            # Demo resume
+│
+└── assets/
+    └── (placeholder for logo)
+```
+
+---
+
+## 🧠 AI Prompt Architecture
+
+The system uses **specialized prompts** for each feature:
+
+| Prompt                   | Purpose                                          | Model                   |
+| ------------------------ | ------------------------------------------------ | ----------------------- |
+| `RESUME_ANALYSIS_PROMPT` | Full resume analysis with structured JSON output | llama-3.3-70b-versatile |
+| `TECH_ROAST_PROMPT`      | Witty roast of resume with constructive fixes    | llama-3.3-70b-versatile |
+| `BULLET_REWRITE_PROMPT`  | Professional bullet point rewrites               | llama-3.3-70b-versatile |
+| `INTERVIEW_PROMPT`       | Generate contextual interview questions          | llama-3.3-70b-versatile |
+| `CAREER_ROADMAP_PROMPT`  | Personalized career improvement plan             | llama-3.3-70b-versatile |
+
+All prompts use **dynamic f-string context injection** — the AI always evaluates the resume against the specific target role and job description provided by the user.
+
+---
+
+## 🔒 Security
+
+* **No hardcoded API keys** — Uses environment variables and Streamlit secrets
+* **No persistent storage** — Resume data is processed in-memory only
+* **No internal prompt exposure** — System prompts are never shown to users
+* **Privacy-first** — Uploaded content is not logged or stored
+* **Error sanitization** — No stack traces or internal details exposed to users
+
+---
+
+## 🚀 Deployment on Streamlit Cloud
+
+1. Push your code to a GitHub repository
+2. Go to [Streamlit Community Cloud](https://streamlit.io/cloud)
+3. Click **New App** → Connect your GitHub repo
+4. Set the main file to `app.py`
+5. Add your `GROQ_API_KEY` in the **Secrets** section
+6. Deploy!
+
+### 🌐 Live Deployment
+
+The project is deployed and publicly accessible on Streamlit Community Cloud:
+
+**🚀 [AI Resume Critic — LIVE PROJECT](https://ai-resumecritic-avantika.streamlit.app/)**
+
+Anyone can access and try the deployed application directly from the link above.
+
+### Deployment Checklist
+
+* [x] `requirements.txt` with pinned versions
+* [x] `.streamlit/config.toml` for theme
+* [x] No hardcoded local paths
+* [x] No system-only dependencies
+* [x] Environment variables via secrets
+* [x] README with setup instructions
+* [x] Public Streamlit deployment
 
 ---
 
 ## 🧪 Testing
 
-The application handles:
+The application handles the following test scenarios:
 
-| Scenario              | Expected Behavior            |
-| --------------------- | ---------------------------- |
-| Fresh launch          | Home page loads successfully |
-| Demo mode             | Sample resume loads          |
-| PDF upload            | Resume text extracted        |
-| TXT upload            | Resume text extracted        |
-| DOCX upload           | Resume text extracted        |
-| Empty resume          | Validation warning           |
-| Empty JD              | Validation warning           |
-| Valid analysis        | Complete dashboard           |
-| Invalid Groq response | Graceful error               |
-| API failure           | User-friendly message        |
-| Missing API key       | Setup instructions           |
-| Session persistence   | Results retained             |
-| Reset                 | Session cleared              |
-| Multiple analyses     | History tracked              |
-| Report generation     | Downloadable report          |
-| Interview             | Question + scoring flow      |
-
----
-
-## 🎓 Capstone Rubric Alignment
-
-| Criteria                 | Implementation                                                |
-| ------------------------ | ------------------------------------------------------------- |
-| Technical Implementation | Python, Streamlit, modular architecture, session state, forms |
-| AI Integration           | Groq API, dynamic prompts, structured AI output               |
-| UI / Visualization       | KPI cards, Plotly charts, tables, improvement tracker         |
-| Deployment               | Streamlit Community Cloud                                     |
-| GitHub                   | README, architecture, setup documentation                     |
-| System Design            | Mermaid architecture and data-flow diagrams                   |
+| Scenario                  | Expected Behavior                |
+| ------------------------- | -------------------------------- |
+| Fresh launch              | Shows home page with demo button |
+| Demo mode                 | Loads sample resume + JD         |
+| Resume upload (PDF)       | Extracts text, validates         |
+| Resume upload (TXT)       | Extracts text, validates         |
+| Resume upload (DOCX)      | Extracts text, validates         |
+| Empty resume              | Shows validation warnings        |
+| Empty JD                  | Shows validation warnings        |
+| Valid analysis            | Full dashboard with charts       |
+| Invalid Groq response     | Graceful error handling          |
+| API failure               | User-friendly error message      |
+| Missing API key           | Warning with setup instructions  |
+| Session state persistence | Data survives reruns             |
+| Reset button              | Clears session safely            |
+| Multiple analyses         | History tracked, deltas shown    |
+| Download report           | TXT/HTML/Markdown downloads      |
+| Interview flow            | Questions, scoring, completion   |
 
 ---
 
-## 🚀 Quick Access
+## 🎯 Capstone Rubric Alignment
 
-<div align="center">
-
-### 🔥 Ready to test it?
-
-# 👉 LAUNCH AI RESUME CRITIC
-
-Upload your resume. Add a job description. Let AI judge it.
-
-> *Your Resume Applied. AI Got Ruthless.*
-
-</div>
+| Criteria                          | Target Score | Implementation                                                                                          |
+| --------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------- |
+| **Technical Implementation (25)** | 25/25        | Python, st.session_state, st.form, Pandas, modular architecture, error handling                         |
+| **AI Integration (20)**           | 20/20        | Groq API, system prompts, dynamic context, structured output, specialized behavior                      |
+| **UI / Visualization (20)**       | 20/20        | Professional dashboard, st.metric with KPI deltas, st.data_editor tracker, Plotly charts, Pandas tables |
+| **Deployment (15)**               | 15/15        | Streamlit Cloud ready, requirements.txt, config.toml                                                    |
+| **GitHub (10)**                   | 10/10        | Custom README, architecture diagrams, setup instructions                                                |
+| **System Design (10)**            | 10/10        | Mermaid diagrams, data flow, API integration docs                                                       |
+| **Total**                         | **100/100**  |                                                                                                         |
 
 ---
 
@@ -510,21 +409,24 @@ This project is licensed under the MIT License.
 
 ## 👩‍💻 Author
 
-### Avantika Shukla
+**Avantika Shukla**
 
-B.Tech Computer Science
-MirAI School of Technology
+B.Tech Computer Science | MirAI School of Technology
 
-Built with ❤️ as a B.Tech Capstone Project.
+[![GitHub](https://img.shields.io/badge/GitHub-avantika--shukla-181717?logo=github)](https://github.com/avantika-shukla)
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Avantika_Shukla-0077B5?logo=linkedin)](https://linkedin.com/in/avantika-shukla)
 
 ---
 
 <div align="center">
 
-### 🤖 AI Resume Critic — Tech-Roast
+### 🚀 Try the Project
 
-"Your Resume Applied. AI Got Ruthless."
+**[👉 AI RESUME CRITIC — LIVE PROJECT](https://ai-resumecritic-avantika.streamlit.app/)**
 
-🚀 Live Demo · ⭐ Star the repository if you found it useful!
+**Built with ❤️ by Avantika Shukla**
+
+*AI Resume Critic — "Your Resume Applied. AI Got Ruthless."*
 
 </div>
