@@ -637,13 +637,23 @@ def render_sidebar():
 # HOME PAGE
 # ============================================================
 def render_home():
-    st.markdown("""
-    <div style="text-align:center;padding:24px 0 8px;">
-        <h1 class="hero-title">🤖 AI RESUME CRITIC</h1>
-        <p class="hero-sub">"Your Resume Applied. AI Got Ruthless."</p>
-        <p class="hero-desc">Upload your resume, select your dream job, and let our AI recruiter<br>brutally analyze your career profile with actionable insights.</p>
-    </div>
-    """, unsafe_allow_html=True)
+   st.markdown("""
+<div style="text-align:center;padding:24px 0 8px;">
+    <h1 class="hero-title">🤖 AI RESUME CRITIC</h1>
+
+    <p class="hero-sub">"Your Resume Applied. AI Got Ruthless."</p>
+
+    <p class="hero-desc" style="
+        text-align: center;
+        max-width: 750px;
+        margin: 0 auto;
+        line-height: 1.6;
+    ">
+        Upload your resume, select your dream job, and let our AI recruiter<br>
+        brutally analyze your career profile with actionable insights.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
     st.markdown("""
     <div class="cta-row">
