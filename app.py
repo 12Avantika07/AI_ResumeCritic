@@ -655,7 +655,7 @@ def render_home():
 </div>
 """, unsafe_allow_html=True)
 
-    st.markdown("""
+  st.markdown("""
     <div class="cta-row">
         <div class="cta-btn cta-primary" onclick="window.parent.postMessage({type:'streamlit:setPage',page:'analysis'},'*')">🚀 Analyze My Resume</div>
         <div class="cta-btn cta-secondary" onclick="window.parent.postMessage({type:'streamlit:setPage',page:'analysis'},'*')">🎯 Try Demo Mode</div>
