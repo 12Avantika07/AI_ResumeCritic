@@ -6,9 +6,8 @@ Main Application Entry Point — Built by Avantika Shukla
 
 import os
 import sys
-import streamlit as st
 import asyncio
-import sys
+import streamlit as st
 
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -33,22 +32,7 @@ CUSTOM_CSS = """
 
     * { font-family: 'Inter', system-ui, -apple-system, sans-serif !important; }
 
-    /* ======= FIX: Material Symbols icon font fallback-text leak =======
-       Streamlit renders its own native icons (expander arrows, chevrons,
-       tooltips, etc.) as <span data-testid="stIconMaterial">icon_name</span>
-       and relies on the "Material Symbols Rounded" web font to turn that
-       ligature text into a glyph. When that font fails to load in a given
-       deployment/network environment, the browser falls back to showing
-       the RAW TEXT ("arrow_right", "keyboard_arrow_down", etc.) instead —
-       which is exactly the overlapping text seen on this app's custom
-       expander buttons. This is a confirmed, documented Streamlit issue
-       (see discuss.streamlit.io "st.expander _arrow_ issue"). The old CSS
-       below (targeting .stArrowIcon / svg[data-testid="stArrowIcon"] /
-       [class*="arrow"]) used selectors that don't match current Streamlit
-       markup at all, which is why it never actually worked. This is the
-       correct, current selector and it's applied globally so the bug can
-       never leak text anywhere in the app again, regardless of which
-       native widget triggers it. */
+    /* ======= FIX: Material Symbols icon font fallback-text leak ======= */
     span[data-testid="stIconMaterial"] {
         font-size: 0 !important;
         line-height: 0 !important;
@@ -86,24 +70,20 @@ CUSTOM_CSS = """
     [data-testid="stSidebarNavLink"] {
         display: none !important;
     }
-    /* Remove raw icon text like "keyboard_double_arrow_left" */
     [data-testid="stSidebar"] > div > div > button,
     [data-testid="stSidebar"] button[title] {
         display: none !important;
     }
-    /* Remove the Streamlit sidebar nav section completely */
     [data-testid="stSidebarNavContainer"],
     [data-testid="stSidebarNav"] {
         display: none !important;
     }
 
     /* ======= EXPANDERS ======= */
-    /* Remove native details marker */
     [data-testid="stExpander"] details summary::-webkit-details-marker,
     [data-testid="stExpander"] details summary::marker { display: none !important; content: '' !important; }
     [data-testid="stExpander"] details summary { list-style: none !important; }
 
-    /* Hide arrow icon — target every possible selector Streamlit versions use */
     [data-testid="stExpander"] summary > div > :first-child,
     [data-testid="stExpander"] details > summary > div > :first-child,
     [data-testid="stExpander"] .stArrowIcon,
@@ -124,19 +104,18 @@ CUSTOM_CSS = """
         opacity: 0 !important;
         pointer-events: none !important;
     }
-    /* Prevent any text leaking from hidden arrow elements */
     [data-testid="stExpander"] summary > div > :first-child::before,
     [data-testid="stExpander"] summary > div > :first-child::after { content: none !important; }
 
     /* ======= FILE UPLOADER ======= */
     [data-testid="stFileUploader"] button[data-testid="stFileUploadButton"] span,
-    [data-testid="stFileUploader"] .stFileUploadButton span { 
-        display: block !important; 
-        text-overflow: ellipsis; 
-        overflow: hidden; 
+    [data-testid="stFileUploader"] .stFileUploadButton span {
+        display: block !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
         white-space: nowrap;
     }
-    [data-testid="stFileUploader"] section[data-testid="stFileUploadDropzone"] { 
+    [data-testid="stFileUploader"] section[data-testid="stFileUploadDropzone"] {
         border-radius: 14px !important;
         border-color: #2D2D44 !important;
         background: #141425 !important;
@@ -147,7 +126,7 @@ CUSTOM_CSS = """
     [data-testid="stFileUploader"] p { color: #94A3B8 !important; }
 
     /* ======= TEXT FIXES ======= */
- h1, h2, h3, h4, h5, h6, p, span, li {
+    h1, h2, h3, h4, h5, h6, p, span, li {
         overflow-wrap: break-word;
         word-wrap: break-word;
         line-height: 1.6;
@@ -512,7 +491,7 @@ def safe_expander(label, key, default=False):
 
     if st.session_state[state_key]:
         return st.container()
-    return st.empty()
+    return None
 
 
 def load_sample_data():
@@ -546,7 +525,8 @@ def run_analysis():
         with st.spinner("AI is ruthlessly analyzing your resume..."):
             analysis = call_groq_json(prompt, RESUME_ANALYSIS_SYSTEM_PROMPT)
         for field in ["ats_score", "job_match_score", "resume_quality_score"]:
-            if field not in analysis: analysis[field] = 0
+            if field not in analysis:
+                analysis[field] = 0
         st.session_state.analysis = analysis
         st.session_state.analysis_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ats_detail = calculate_ats_score(analysis)
@@ -558,7 +538,11 @@ def run_analysis():
         prev = get_previous_analysis()
         prev_dict = {}
         if prev:
-            prev_dict = {"ats": {"score": prev.get("ats_score", 0)}, "job_match": {"score": prev.get("job_match_score", 0)}, "resume_quality": {"score": prev.get("resume_quality_score", 0)}}
+            prev_dict = {
+                "ats": {"score": prev.get("ats_score", 0)},
+                "job_match": {"score": prev.get("job_match_score", 0)},
+                "resume_quality": {"score": prev.get("resume_quality_score", 0)},
+            }
         current_dict = {"ats": ats_detail, "job_match": jm_detail, "resume_quality": quality_detail}
         st.session_state.score_deltas = compute_score_deltas(current_dict, prev_dict)
         save_analysis_to_history(ats_score=ats_detail["score"], job_match_score=jm_detail["score"],
@@ -567,11 +551,17 @@ def run_analysis():
         st.session_state.analysis_running = False
         return True
     except ValueError as e:
-        st.error(str(e)); st.session_state.analysis_running = False; return False
+        st.error(str(e))
+        st.session_state.analysis_running = False
+        return False
     except RuntimeError as e:
-        st.error(str(e)); st.session_state.analysis_running = False; return False
-    except Exception as e:
-        st.error("⚠️ Something went wrong. Please try again in a moment."); st.session_state.analysis_running = False; return False
+        st.error(str(e))
+        st.session_state.analysis_running = False
+        return False
+    except Exception:
+        st.error("⚠️ Something went wrong. Please try again in a moment.")
+        st.session_state.analysis_running = False
+        return False
 
 
 # ============================================================
@@ -637,7 +627,7 @@ def render_sidebar():
 # HOME PAGE
 # ============================================================
 def render_home():
-   st.markdown("""
+    st.markdown("""
 <div style="text-align:center;padding:24px 0 8px;">
     <h1 class="hero-title">🤖 AI RESUME CRITIC</h1>
 
@@ -655,37 +645,38 @@ def render_home():
 </div>
 """, unsafe_allow_html=True)
 
-  st.markdown("""
-    <div class="cta-row">
-        <div class="cta-btn cta-primary" onclick="window.parent.postMessage({type:'streamlit:setPage',page:'analysis'},'*')">🚀 Analyze My Resume</div>
-        <div class="cta-btn cta-secondary" onclick="window.parent.postMessage({type:'streamlit:setPage',page:'analysis'},'*')">🎯 Try Demo Mode</div>
-        <div class="cta-btn cta-secondary" onclick="window.parent.postMessage({type:'streamlit:setPage',page:'interview'},'*')">🎤 Mock Interview</div>
-    </div>
-    """, unsafe_allow_html=True)
-
+    # Streamlit HTML me onclick/JS strip kar deta hai, isliye real st.button use kiye hain.
     if st.button("🚀 Analyze My Resume", type="primary", use_container_width=True, key="hero_cta"):
-        st.session_state.page = "analysis"; st.rerun()
+        st.session_state.page = "analysis"
+        st.rerun()
 
     c1, c2 = st.columns(2)
     with c1:
         if st.button("🎯 Try Demo Mode", use_container_width=True, key="hero_demo"):
-            load_sample_data(); st.session_state.page = "analysis"; st.rerun()
+            load_sample_data()
+            st.session_state.page = "analysis"
+            st.rerun()
     with c2:
         if st.button("🎤 Mock Interview", use_container_width=True, key="hero_interview"):
-            st.session_state.page = "interview"; st.rerun()
+            st.session_state.page = "interview"
+            st.rerun()
 
     st.markdown('<div class="section-header"><span class="icon">✨</span> Features</div>', unsafe_allow_html=True)
     features = [
-        ("🔍", "ATS Analysis", "Score your resume against Applicant Tracking Systems with detailed breakdowns", "analysis"),
-        ("🎯", "Job Matching", "See how well your resume fits the target role with keyword analysis", "job_match"),
-        ("🧠", "Skill Gap Detection", "Find missing technical and soft skills with priority levels", "skill_gaps"),
-        ("✍️", "AI Bullet Rewriting", "Transform weak bullets into powerful, impact-driven statements", "analysis"),
-        ("🔥", "Tech-Roast", "Get roasted by our witty AI recruiter — professionally of course", "tech_roast"),
-        ("🎤", "Mock Interview", "Practice with AI-generated questions and get scored", "interview"),
+        ("🔍", "ATS Analysis", "Score your resume against Applicant Tracking Systems with detailed breakdowns"),
+        ("🎯", "Job Matching", "See how well your resume fits the target role with keyword analysis"),
+        ("🧠", "Skill Gap Detection", "Find missing technical and soft skills with priority levels"),
+        ("✍️", "AI Bullet Rewriting", "Transform weak bullets into powerful, impact-driven statements"),
+        ("🔥", "Tech-Roast", "Get roasted by our witty AI recruiter — professionally of course"),
+        ("🎤", "Mock Interview", "Practice with AI-generated questions and get scored"),
     ]
     cards_html = '<div class="features-grid">'
-    for icon, title, desc, page in features:
-        cards_html += f'<div class="feature-card" onclick="window.parent.postMessage({{type:\'streamlit:setPage\',page:\'{page}\'}},\'*\')"><span class="feature-icon">{icon}</span><div class="feature-title">{title}</div><div class="feature-desc">{desc}</div></div>'
+    for icon, title, desc in features:
+        cards_html += (
+            f'<div class="feature-card"><span class="feature-icon">{icon}</span>'
+            f'<div class="feature-title">{title}</div>'
+            f'<div class="feature-desc">{desc}</div></div>'
+        )
     cards_html += '</div>'
     st.markdown(cards_html, unsafe_allow_html=True)
 
@@ -740,9 +731,7 @@ def render_analysis_page():
             st.markdown("### 📄 Resume")
             uploaded_file = st.file_uploader("Upload Resume", type=["pdf", "txt", "docx"], help="Supports PDF, TXT, DOCX")
             if uploaded_file:
-                # Only extract text ONCE per unique file. Re-extracting on every rerun
-                # was the root cause of "Could not read file" — the uploaded file's
-                # internal buffer can only be read once per selection.
+                # Extract text only ONCE per unique file (buffer can be read once per selection).
                 file_signature = f"{uploaded_file.name}_{uploaded_file.size}"
                 if st.session_state.get("_last_upload_signature") != file_signature:
                     st.session_state["_last_upload_signature"] = file_signature
@@ -767,10 +756,7 @@ def render_analysis_page():
                     if validation["issues"]:
                         for issue in validation["issues"]:
                             st.warning(f"⚠️ {issue}")
-                    # NOTE: safe_expander() uses st.button() internally, which Streamlit
-                    # does not allow inside st.form(). Use the native st.expander here
-                    # instead — it's form-safe, and the CSS at the top of this file
-                    # already hides the arrow-icon rendering bug globally.
+                    # st.button() form ke andar allowed nahi hai, isliye yahan native st.expander.
                     with st.expander("📄 View Extracted Resume"):
                         st.text_area("Resume Text", st.session_state.resume_text, height=250, disabled=True)
 
@@ -819,7 +805,6 @@ def render_dashboard():
     rq_detail = st.session_state.resume_quality_detail
     deltas = st.session_state.score_deltas
 
-    # KPI Cards — st.metric with computed deltas (rubric: dynamic KPI cards)
     d_ats = deltas.get("ats")
     d_jm = deltas.get("job_match")
     d_rq = deltas.get("resume_quality")
@@ -828,27 +813,27 @@ def render_dashboard():
     kpi1, kpi2, kpi3, kpi4 = st.columns(4)
     with kpi1:
         st.metric("📊 ATS Score", f"{ats_detail['score']}%",
-                   delta=(f"{d_ats:+d}" if d_ats is not None else None))
+                  delta=(f"{d_ats:+d}" if d_ats is not None else None))
     with kpi2:
         st.metric("🎯 Job Match", f"{jm_detail['score']}%",
-                   delta=(f"{d_jm:+d}" if d_jm is not None else None))
+                  delta=(f"{d_jm:+d}" if d_jm is not None else None))
     with kpi3:
         st.metric("📝 Resume Quality", f"{rq_detail['score']}%",
-                   delta=(f"{d_rq:+d}" if d_rq is not None else None))
+                  delta=(f"{d_rq:+d}" if d_rq is not None else None))
     with kpi4:
         st.metric("⚠️ Missing Keywords", missing_count,
-                   help="Keywords found in the job description but missing from your resume")
+                  help="Keywords found in the job description but missing from your resume")
 
-    # Verdict
     verdict = analysis.get("recruiter_verdict", "N/A")
     vc = get_verdict_color(verdict)
-    vcls = "verdict-strong" if "STRONG" in verdict.upper() else "verdict-moderate" if "MODERATE" in verdict.upper() else "verdict-needs-work" if "IMPROVEMENT" in verdict.upper() else "verdict-not-ready"
+    vcls = ("verdict-strong" if "STRONG" in verdict.upper()
+            else "verdict-moderate" if "MODERATE" in verdict.upper()
+            else "verdict-needs-work" if "IMPROVEMENT" in verdict.upper()
+            else "verdict-not-ready")
     st.markdown(f'<div class="verdict-banner"><div class="verdict-badge {vcls}" style="border-color:{vc};">🎖️ {verdict}</div></div>', unsafe_allow_html=True)
 
-    # Executive Summary
     st.markdown('<div class="content-card"><p style="color:#94A3B8;font-size:0.85em;font-weight:600;margin-bottom:8px;">📋 EXECUTIVE SUMMARY</p><p style="color:#E2E8F0;line-height:1.7;">{}</p></div>'.format(analysis.get("executive_summary", "N/A")), unsafe_allow_html=True)
 
-    # Tabs
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["📊 Scores & Charts", "🔑 Keywords", "📝 Bullet Rewrites", "💡 Recommendations", "🎤 Interview Qs", "✅ Tracker"])
     with tab1:
         render_scores_charts(analysis, ats_detail)
@@ -881,15 +866,20 @@ def render_scores_charts(analysis, ats_detail):
             x=["ATS Score", "Job Match", "Resume Quality"], y=vals,
             marker_color=["#7C3AED", "#22C55E", "#F59E0B"], text=vals, textposition="outside"))
         compare_fig.update_layout(paper_bgcolor='#0F0F1A', plot_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'),
-            yaxis=dict(gridcolor='#2D2D44', range=[0, 100], title="Score"), xaxis=dict(gridcolor='#2D2D44'),
-            height=320, showlegend=False)
+                                  yaxis=dict(gridcolor='#2D2D44', range=[0, 100], title="Score"), xaxis=dict(gridcolor='#2D2D44'),
+                                  height=320, showlegend=False)
         st.plotly_chart(compare_fig, use_container_width=True)
 
     section_scores = analysis.get("section_scores", {})
     if section_scores:
         st.markdown("### 📊 Resume Section Scores")
-        fig = go.Figure(data=go.Scatterpolar(r=list(section_scores.values()), theta=[s.capitalize() for s in section_scores.keys()], fill='toself', fillcolor='rgba(124,58,237,0.2)', line=dict(color='#7C3AED', width=3), marker=dict(size=10, color='#A78BFA')))
-        fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 100], tickfont=dict(color='#94A3B8'), gridcolor='#2D2D44'), bgcolor='#0F0F1A'), paper_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'), showlegend=False, height=380)
+        fig = go.Figure(data=go.Scatterpolar(
+            r=list(section_scores.values()),
+            theta=[s.capitalize() for s in section_scores.keys()],
+            fill='toself', fillcolor='rgba(124,58,237,0.2)',
+            line=dict(color='#7C3AED', width=3), marker=dict(size=10, color='#A78BFA')))
+        fig.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, 100], tickfont=dict(color='#94A3B8'), gridcolor='#2D2D44'), bgcolor='#0F0F1A'),
+                          paper_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'), showlegend=False, height=380)
         st.plotly_chart(fig, use_container_width=True)
 
     tech_skills = analysis.get("technical_skills", [])
@@ -900,7 +890,8 @@ def render_scores_charts(analysis, ats_detail):
         fig_data = {"Type": ["Found"] * len(tech_skills) + ["Missing"] * len(missing_skills), "Skill": tech_skills + missing_skills}
         fig_df = pd.DataFrame(fig_data)
         fig = px.bar(fig_df, x="Skill", color="Type", color_discrete_map={"Found": "#22C55E", "Missing": "#EF4444"}, title="Skills: Found vs Missing")
-        fig.update_layout(paper_bgcolor='#0F0F1A', plot_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'), xaxis=dict(gridcolor='#2D2D44'), yaxis=dict(gridcolor='#2D2D44'), height=380)
+        fig.update_layout(paper_bgcolor='#0F0F1A', plot_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'),
+                          xaxis=dict(gridcolor='#2D2D44'), yaxis=dict(gridcolor='#2D2D44'), height=380)
         st.plotly_chart(fig, use_container_width=True)
 
     history = st.session_state.get("analysis_history", [])
@@ -910,34 +901,37 @@ def render_scores_charts(analysis, ats_detail):
         fig = go.Figure()
         for col, color, name in [("ats_score", "#7C3AED", "ATS"), ("job_match_score", "#22C55E", "Job Match"), ("resume_quality_score", "#F59E0B", "Quality")]:
             fig.add_trace(go.Scatter(x=hist_df["timestamp"], y=hist_df[col], name=name, line=dict(color=color, width=2.5)))
-        fig.update_layout(paper_bgcolor='#0F0F1A', plot_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'), xaxis=dict(gridcolor='#2D2D44'), yaxis=dict(gridcolor='#2D2D44'), legend=dict(bgcolor='#1A1A2E', bordercolor='#2D2D44'), height=350)
+        fig.update_layout(paper_bgcolor='#0F0F1A', plot_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'),
+                          xaxis=dict(gridcolor='#2D2D44'), yaxis=dict(gridcolor='#2D2D44'),
+                          legend=dict(bgcolor='#1A1A2E', bordercolor='#2D2D44'), height=350)
         st.plotly_chart(fig, use_container_width=True)
 
 
 def render_keywords(analysis):
     matching = analysis.get("matching_keywords", [])
     missing = analysis.get("missing_keywords", [])
-    st.markdown('<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">', unsafe_allow_html=True)
-    st.markdown('<div><p style="color:#4ADE80;font-weight:700;margin-bottom:10px;">✅ Matching Keywords ({})</p>'.format(len(matching)), unsafe_allow_html=True)
-    if matching:
-        st.markdown(" ".join(f'<span class="keyword-found">{kw}</span>' for kw in matching), unsafe_allow_html=True)
-    else:
-        st.warning("No matching keywords found.")
 
-    st.markdown('<p style="color:#F87171;font-weight:700;margin-bottom:10px;">⚠️ Missing Keywords ({})</p>'.format(len(missing)), unsafe_allow_html=True)
-    if missing:
-        kw_html = ""
-        for kw in missing:
-            if isinstance(kw, dict):
-                imp = kw.get("importance", "Medium")
-                kname = kw.get("keyword", "")
-                kw_html += f'<span class="keyword-missing" title="{imp}">{kname}</span> '
-            else:
-                kw_html += f'<span class="keyword-missing">{kw}</span> '
-        st.markdown(kw_html, unsafe_allow_html=True)
-    else:
-        st.success("No critical missing keywords!")
-    st.markdown('</div>', unsafe_allow_html=True)
+    col_a, col_b = st.columns(2)
+    with col_a:
+        st.markdown(f'<p style="color:#4ADE80;font-weight:700;margin-bottom:10px;">✅ Matching Keywords ({len(matching)})</p>', unsafe_allow_html=True)
+        if matching:
+            st.markdown(" ".join(f'<span class="keyword-found">{kw}</span>' for kw in matching), unsafe_allow_html=True)
+        else:
+            st.warning("No matching keywords found.")
+    with col_b:
+        st.markdown(f'<p style="color:#F87171;font-weight:700;margin-bottom:10px;">⚠️ Missing Keywords ({len(missing)})</p>', unsafe_allow_html=True)
+        if missing:
+            kw_html = ""
+            for kw in missing:
+                if isinstance(kw, dict):
+                    imp = kw.get("importance", "Medium")
+                    kname = kw.get("keyword", "")
+                    kw_html += f'<span class="keyword-missing" title="{imp}">{kname}</span> '
+                else:
+                    kw_html += f'<span class="keyword-missing">{kw}</span> '
+            st.markdown(kw_html, unsafe_allow_html=True)
+        else:
+            st.success("No critical missing keywords!")
 
     st.markdown("### 📋 Keyword Table")
     keyword_data = []
@@ -960,7 +954,8 @@ def render_bullets(analysis):
         return
     st.markdown(f'<p style="color:#FBBF24;font-weight:700;font-size:1.1em;">Found {len(weak)} Weak Bullet Points</p>', unsafe_allow_html=True)
     for i, b in enumerate(weak, 1):
-        if not isinstance(b, dict): continue
+        if not isinstance(b, dict):
+            continue
         st.markdown(f"""<div class="bullet-card">
             <p style="color:#94A3B8;font-weight:600;font-size:0.85em;margin-bottom:8px;">Bullet #{i}</p>
             <p class="bullet-original">❌ {b.get('original', 'N/A')}</p>
@@ -983,21 +978,25 @@ def render_recommendations(analysis):
     c1, c2 = st.columns(2)
     with c1:
         st.markdown('<div class="content-card"><p style="color:#4ADE80;font-weight:700;margin-bottom:12px;">✅ Strengths</p>', unsafe_allow_html=True)
-        for s in strengths: st.markdown(f'<p style="color:#CBD5E1;margin:4px 0;">• {s}</p>', unsafe_allow_html=True)
+        for s in strengths:
+            st.markdown(f'<p style="color:#CBD5E1;margin:4px 0;">• {s}</p>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
     with c2:
         st.markdown('<div class="content-card"><p style="color:#F87171;font-weight:700;margin-bottom:12px;">❌ Weaknesses</p>', unsafe_allow_html=True)
-        for w in weaknesses: st.markdown(f'<p style="color:#CBD5E1;margin:4px 0;">• {w}</p>', unsafe_allow_html=True)
+        for w in weaknesses:
+            st.markdown(f'<p style="color:#CBD5E1;margin:4px 0;">• {w}</p>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     c3, c4 = st.columns(2)
     with c3:
         st.markdown('<div class="content-card"><p style="color:#A78BFA;font-weight:700;margin-bottom:12px;">💡 Recommendations</p>', unsafe_allow_html=True)
-        for i, r in enumerate(recs, 1): st.markdown(f'<p style="color:#CBD5E1;margin:4px 0;"><strong>{i}.</strong> {r}</p>', unsafe_allow_html=True)
+        for i, r in enumerate(recs, 1):
+            st.markdown(f'<p style="color:#CBD5E1;margin:4px 0;"><strong>{i}.</strong> {r}</p>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
     with c4:
         st.markdown('<div class="content-card"><p style="color:#F59E0B;font-weight:700;margin-bottom:12px;">🎯 Priority Actions</p>', unsafe_allow_html=True)
-        for i, a in enumerate(actions, 1): st.markdown(f'<p style="color:#CBD5E1;margin:4px 0;"><strong>{i}.</strong> {a}</p>', unsafe_allow_html=True)
+        for i, a in enumerate(actions, 1):
+            st.markdown(f'<p style="color:#CBD5E1;margin:4px 0;"><strong>{i}.</strong> {a}</p>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
 
@@ -1096,7 +1095,8 @@ def render_interview_qs(analysis):
         return
     st.markdown(f'<p style="font-weight:700;font-size:1.1em;">🎤 {len(questions)} Practice Interview Questions</p>', unsafe_allow_html=True)
     for i, q in enumerate(questions, 1):
-        if not isinstance(q, dict): continue
+        if not isinstance(q, dict):
+            continue
         cat = q.get("category", "General")
         diff = q.get("difficulty", "Medium")
         dc = {"Easy": "#22C55E", "Medium": "#F59E0B", "Hard": "#EF4444"}.get(diff, "#94A3B8")
@@ -1106,7 +1106,8 @@ def render_interview_qs(analysis):
         </div>""", unsafe_allow_html=True)
 
     if st.button("🎤 Start Full Mock Interview", type="primary", use_container_width=True):
-        st.session_state.page = "interview"; st.rerun()
+        st.session_state.page = "interview"
+        st.rerun()
 
 
 # ============================================================
@@ -1119,10 +1120,13 @@ def render_job_match_page():
         c1, c2 = st.columns(2)
         with c1:
             if st.button("📄 Go to Analysis", type="primary", use_container_width=True):
-                st.session_state.page = "analysis"; st.rerun()
+                st.session_state.page = "analysis"
+                st.rerun()
         with c2:
             if st.button("🎯 Try Demo", use_container_width=True):
-                load_sample_data(); st.session_state.page = "analysis"; st.rerun()
+                load_sample_data()
+                st.session_state.page = "analysis"
+                st.rerun()
         return
     render_dashboard()
 
@@ -1136,7 +1140,8 @@ def render_tech_roast():
     if not is_analysis_available():
         st.markdown('<div class="content-card" style="text-align:center;padding:40px;"><p style="color:#F59E0B;">⚠️ Please run a resume analysis first!</p></div>', unsafe_allow_html=True)
         if st.button("📄 Go to Analysis", type="primary", use_container_width=True):
-            st.session_state.page = "analysis"; st.rerun()
+            st.session_state.page = "analysis"
+            st.rerun()
         return
     if st.button("🔥 Roast My Resume", type="primary", use_container_width=True):
         try:
@@ -1161,7 +1166,8 @@ def render_skill_gaps():
     if not is_analysis_available():
         st.markdown('<div class="content-card" style="text-align:center;padding:40px;"><p style="color:#F59E0B;">⚠️ Please run a resume analysis first!</p></div>', unsafe_allow_html=True)
         if st.button("📄 Go to Analysis", type="primary", use_container_width=True):
-            st.session_state.page = "analysis"; st.rerun()
+            st.session_state.page = "analysis"
+            st.rerun()
         return
     analysis = st.session_state.analysis
     tech_skills = analysis.get("technical_skills", [])
@@ -1187,14 +1193,18 @@ def render_skill_gaps():
         st.markdown('</div>', unsafe_allow_html=True)
 
     all_skills = []
-    for s in tech_skills: all_skills.append({"Skill": s, "Status": "Found", "Priority": "—"})
+    for s in tech_skills:
+        all_skills.append({"Skill": s, "Status": "Found", "Priority": "—"})
     for s in missing_skills:
-        if isinstance(s, dict): all_skills.append({"Skill": s.get("skill", ""), "Status": "Missing", "Priority": s.get("priority", "Medium")})
-        else: all_skills.append({"Skill": str(s), "Status": "Missing", "Priority": "Medium"})
+        if isinstance(s, dict):
+            all_skills.append({"Skill": s.get("skill", ""), "Status": "Missing", "Priority": s.get("priority", "Medium")})
+        else:
+            all_skills.append({"Skill": str(s), "Status": "Missing", "Priority": "Medium"})
     if all_skills:
         df = pd.DataFrame(all_skills)
         fig = px.bar(df, x="Skill", color="Status", color_discrete_map={"Found": "#22C55E", "Missing": "#EF4444"})
-        fig.update_layout(paper_bgcolor='#0F0F1A', plot_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'), xaxis=dict(gridcolor='#2D2D44'), yaxis=dict(gridcolor='#2D2D44'), height=380)
+        fig.update_layout(paper_bgcolor='#0F0F1A', plot_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'),
+                          xaxis=dict(gridcolor='#2D2D44'), yaxis=dict(gridcolor='#2D2D44'), height=380)
         st.plotly_chart(fig, use_container_width=True)
 
     soft_gaps = analysis.get("soft_skill_gaps", [])
@@ -1208,23 +1218,66 @@ def render_skill_gaps():
 # ============================================================
 # MOCK INTERVIEW PAGE
 # ============================================================
+def render_interview_results():
+    """Final result screen — stays visible until user restarts."""
+    questions = st.session_state.interview_questions
+    scores = st.session_state.interview_scores
+    answers = st.session_state.interview_answers
+    avg = float(np.mean(scores)) if scores else 0.0
+    st.session_state.interview_overall_score = avg
+    answered = len([a for a in answers if a != "(Skipped)"])
+
+    st.markdown(f"""<div style="text-align:center;margin:24px 0;">
+        <h2 style="color:#4ADE80;font-size:1.8em;">🎉 Interview Complete!</h2>
+    </div>
+    <div class="metric-row">
+        <div class="metric-card" style="--accent:#7C3AED"><span class="metric-icon">📊</span><div class="metric-value">{avg:.1f}</div><div class="metric-label">Overall Score</div><div class="metric-delta neutral">out of 10</div></div>
+        <div class="metric-card" style="--accent:#22C55E"><span class="metric-icon">✅</span><div class="metric-value">{answered}</div><div class="metric-label">Answered</div><div class="metric-delta neutral">of {len(questions)}</div></div>
+    </div>""", unsafe_allow_html=True)
+
+    if scores:
+        fig = go.Figure(data=go.Bar(
+            y=[f"Q{i+1}" for i in range(len(scores))], x=scores, orientation='h',
+            marker_color=['#22C55E' if s >= 7 else '#F59E0B' if s >= 4 else '#EF4444' for s in scores]))
+        fig.update_layout(paper_bgcolor='#0F0F1A', plot_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'),
+                          xaxis=dict(gridcolor='#2D2D44', range=[0, 10], title="Score"),
+                          height=max(200, len(scores) * 50))
+        st.plotly_chart(fig, use_container_width=True)
+
+    if st.button("🔄 Restart Interview", use_container_width=True):
+        st.session_state.interview_active = False
+        st.session_state.interview_completed = False
+        st.session_state.interview_current_idx = 0
+        st.session_state.interview_answers = []
+        st.session_state.interview_scores = []
+        st.session_state.interview_feedback = []
+        st.rerun()
+
+
 def render_mock_interview():
     st.markdown('<div class="section-header"><span class="icon">🎤</span> AI Mock Interview</div>', unsafe_allow_html=True)
     if not is_analysis_available():
         st.markdown('<div class="content-card" style="text-align:center;padding:40px;"><p style="color:#F59E0B;">⚠️ Please run a resume analysis first!</p></div>', unsafe_allow_html=True)
         if st.button("📄 Go to Analysis", type="primary", use_container_width=True):
-            st.session_state.page = "analysis"; st.rerun()
+            st.session_state.page = "analysis"
+            st.rerun()
         return
 
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        mode = st.selectbox("Interview Mode", ["Mixed Interview", "Technical Interview", "HR Interview", "Project Interview"], key="int_mode_sel")
-    with c2:
-        difficulty = st.selectbox("Difficulty", ["Easy", "Medium", "Hard"], key="int_diff_sel")
-    with c3:
-        num_qs = st.slider("Questions", 3, 10, 5)
+    # Completed -> show results and stop
+    if st.session_state.interview_completed:
+        render_interview_results()
+        return
 
+    # Not started -> settings + start button
     if not st.session_state.interview_active:
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            mode = st.selectbox("Interview Mode", ["Mixed Interview", "Technical Interview", "HR Interview", "Project Interview"], key="int_mode_sel")
+        with c2:
+            difficulty = st.selectbox("Difficulty", ["Easy", "Medium", "Hard"], key="int_diff_sel")
+        with c3:
+            num_qs = st.slider("Questions", 3, 10, 5)
+
         if st.button("🎤 Start Interview", type="primary", use_container_width=True):
             try:
                 prompt = build_prompt(INTERVIEW_PROMPT, resume_text=st.session_state.resume_text,
@@ -1233,6 +1286,9 @@ def render_mock_interview():
                 with st.spinner("🧠 Generating questions..."):
                     result = call_groq_json(prompt, INTERVIEW_SYSTEM_PROMPT)
                 questions = result.get("questions", [])
+                if not questions:
+                    st.error("⚠️ No questions were generated. Please try again.")
+                    return
                 st.session_state.interview_questions = questions
                 st.session_state.interview_current_idx = 0
                 st.session_state.interview_answers = []
@@ -1240,64 +1296,50 @@ def render_mock_interview():
                 st.session_state.interview_feedback = []
                 st.session_state.interview_active = True
                 st.session_state.interview_completed = False
+                st.rerun()
             except Exception as e:
                 st.error(str(e))
+        return
 
-    if st.session_state.interview_active:
-        questions = st.session_state.interview_questions
-        idx = st.session_state.interview_current_idx
-        if idx < len(questions):
-            q = questions[idx]
-            dc = {"Easy": "#22C55E", "Medium": "#F59E0B", "Hard": "#EF4444"}.get(q.get("difficulty", "Medium"), "#94A3B8")
-            progress = (idx + 1) / len(questions)
-            st.markdown(f"""<div class="content-card">
-                <p style="color:#94A3B8;font-size:0.85em;margin-bottom:10px;">Question {idx+1} of {len(questions)} | {q.get('category', 'General')} | <span style="color:{dc}">{q.get('difficulty', 'Medium')}</span></p>
-                <h3 style="color:#E2E8F0;font-size:1.15em;">{q.get('question', '')}</h3>
-            </div>
-            <div class="progress-wrap"><div class="progress-fill" style="width:{progress*100}%"></div></div>""", unsafe_allow_html=True)
-            answer = st.text_area("Your Answer:", height=120, key=f"ans_{idx}")
-            ca, cb = st.columns(2)
-            with ca:
-                if st.button("➡️ Submit", type="primary", use_container_width=True):
-                    if answer.strip():
-                        st.session_state.interview_answers.append(answer)
-                        score = min(10, max(1, len(answer.split()) // 10))
-                        st.session_state.interview_scores.append(score)
-                        st.session_state.interview_feedback.append(f"Score: {score}/10")
-                        st.session_state.interview_current_idx += 1
-                        st.rerun()
-                    else:
-                        st.warning("Please write an answer!")
-            with cb:
-                if st.button("⏭️ Skip", use_container_width=True):
-                    st.session_state.interview_answers.append("(Skipped)")
-                    st.session_state.interview_scores.append(0)
-                    st.session_state.interview_feedback.append("Skipped.")
-                    st.session_state.interview_current_idx += 1
-                    st.rerun()
-        else:
-            st.session_state.interview_completed = True
-            st.session_state.interview_active = False
-            scores = st.session_state.interview_scores
-            avg = np.mean(scores) if scores else 0
-            st.session_state.interview_overall_score = avg
-            st.markdown(f"""<div style="text-align:center;margin:24px 0;">
-                <h2 style="color:#4ADE80;font-size:1.8em;">🎉 Interview Complete!</h2>
-            </div>
-            <div class="metric-row">
-                <div class="metric-card" style="--accent:#7C3AED"><span class="metric-icon">📊</span><div class="metric-value">{avg:.1f}</div><div class="metric-label">Overall Score</div><div class="metric-delta neutral">out of 10</div></div>
-                <div class="metric-card" style="--accent:#22C55E"><span class="metric-icon">✅</span><div class="metric-value">{len([a for a in st.session_state.interview_answers if a != '(Skipped)'])}</div><div class="metric-label">Answered</div><div class="metric-delta neutral">of {len(questions)}</div></div>
-            </div>""", unsafe_allow_html=True)
-            if scores:
-                fig = go.Figure(data=go.Bar(y=[f"Q{i+1}" for i in range(len(scores))], x=scores, orientation='h',
-                    marker_color=['#22C55E' if s >= 7 else '#F59E0B' if s >= 4 else '#EF4444' for s in scores]))
-                fig.update_layout(paper_bgcolor='#0F0F1A', plot_bgcolor='#0F0F1A', font=dict(color='#E2E8F0'),
-                    xaxis=dict(gridcolor='#2D2D44', range=[0, 10], title="Score"), height=max(200, len(scores)*50))
-                st.plotly_chart(fig, use_container_width=True)
-            if st.button("🔄 Restart Interview", use_container_width=True):
-                for k in ["interview_active", "interview_current_idx", "interview_answers", "interview_scores", "interview_feedback", "interview_completed"]:
-                    st.session_state[k] = False if k == "interview_active" or k == "interview_completed" else (0 if k == "interview_current_idx" else [])
+    # Active interview
+    questions = st.session_state.interview_questions
+    idx = st.session_state.interview_current_idx
+
+    if idx >= len(questions):
+        st.session_state.interview_completed = True
+        st.session_state.interview_active = False
+        st.rerun()
+        return
+
+    q = questions[idx]
+    dc = {"Easy": "#22C55E", "Medium": "#F59E0B", "Hard": "#EF4444"}.get(q.get("difficulty", "Medium"), "#94A3B8")
+    progress = (idx + 1) / len(questions)
+    st.markdown(f"""<div class="content-card">
+        <p style="color:#94A3B8;font-size:0.85em;margin-bottom:10px;">Question {idx+1} of {len(questions)} | {q.get('category', 'General')} | <span style="color:{dc}">{q.get('difficulty', 'Medium')}</span></p>
+        <h3 style="color:#E2E8F0;font-size:1.15em;">{q.get('question', '')}</h3>
+    </div>
+    <div class="progress-wrap"><div class="progress-fill" style="width:{progress*100}%"></div></div>""", unsafe_allow_html=True)
+
+    answer = st.text_area("Your Answer:", height=120, key=f"ans_{idx}")
+    ca, cb = st.columns(2)
+    with ca:
+        if st.button("➡️ Submit", type="primary", use_container_width=True):
+            if answer.strip():
+                st.session_state.interview_answers.append(answer)
+                score = min(10, max(1, len(answer.split()) // 10))
+                st.session_state.interview_scores.append(score)
+                st.session_state.interview_feedback.append(f"Score: {score}/10")
+                st.session_state.interview_current_idx += 1
                 st.rerun()
+            else:
+                st.warning("Please write an answer!")
+    with cb:
+        if st.button("⏭️ Skip", use_container_width=True):
+            st.session_state.interview_answers.append("(Skipped)")
+            st.session_state.interview_scores.append(0)
+            st.session_state.interview_feedback.append("Skipped.")
+            st.session_state.interview_current_idx += 1
+            st.rerun()
 
 
 # ============================================================
@@ -1308,18 +1350,20 @@ def render_career_insights():
     if not is_analysis_available():
         st.markdown('<div class="content-card" style="text-align:center;padding:40px;"><p style="color:#F59E0B;">⚠️ Please run a resume analysis first!</p></div>', unsafe_allow_html=True)
         if st.button("📄 Go to Analysis", type="primary", use_container_width=True):
-            st.session_state.page = "analysis"; st.rerun()
+            st.session_state.page = "analysis"
+            st.rerun()
         return
     analysis = st.session_state.analysis
     if st.button("🗺️ Generate Career Roadmap", type="primary", use_container_width=True):
         try:
-            prompt = build_prompt(CAREER_ROADMAP_PROMPT,
-                                  ats_score=st.session_state.ats_score_detail["score"],
-                                  job_match_score=st.session_state.job_match_detail["score"],
-                                  resume_quality_score=st.session_state.resume_quality_detail["score"],
-                                  weaknesses=", ".join(analysis.get("weaknesses", [])),
-                                  missing_skills=", ".join([s.get("skill", str(s)) if isinstance(s, dict) else str(s) for s in analysis.get("missing_skills", [])]),
-                                  target_role=st.session_state.target_role or "Software Engineer")
+            prompt = build_prompt(
+                CAREER_ROADMAP_PROMPT,
+                ats_score=st.session_state.ats_score_detail["score"],
+                job_match_score=st.session_state.job_match_detail["score"],
+                resume_quality_score=st.session_state.resume_quality_detail["score"],
+                weaknesses=", ".join(analysis.get("weaknesses", [])),
+                missing_skills=", ".join([s.get("skill", str(s)) if isinstance(s, dict) else str(s) for s in analysis.get("missing_skills", [])]),
+                target_role=st.session_state.target_role or "Software Engineer")
             with st.spinner("🗺️ Generating roadmap..."):
                 roadmap = call_groq_json(prompt, CAREER_ROADMAP_SYSTEM_PROMPT)
             st.session_state.career_roadmap = roadmap
@@ -1360,7 +1404,8 @@ def render_report_download():
     if not is_analysis_available():
         st.markdown('<div class="content-card" style="text-align:center;padding:40px;"><p style="color:#F59E0B;margin-bottom:12px;">⚠️ No analysis to download</p><p style="color:#94A3B8;">Please run a resume analysis first.</p></div>', unsafe_allow_html=True)
         if st.button("📄 Go to Analysis", type="primary", use_container_width=True):
-            st.session_state.page = "analysis"; st.rerun()
+            st.session_state.page = "analysis"
+            st.rerun()
         return
 
     analysis = st.session_state.analysis
@@ -1370,33 +1415,34 @@ def render_report_download():
     html_report = generate_html_report(analysis, scoring, st.session_state.resume_text, st.session_state.job_description, role)
     md_report = generate_markdown_report(analysis, scoring, st.session_state.resume_text, st.session_state.job_description, role)
 
-    st.markdown('<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:24px 0;">', unsafe_allow_html=True)
-    st.markdown(f"""
-    <div class="report-card">
-        <span class="report-icon">📄</span>
-        <div class="report-title">Plain Text</div>
-        <div class="report-desc">Clean text report with all analysis data</div>
-    </div>
-    <div class="report-card">
-        <span class="report-icon">🌐</span>
-        <div class="report-title">HTML Report</div>
-        <div class="report-desc">Styled web report, open in any browser</div>
-    </div>
-    <div class="report-card">
-        <span class="report-icon">📝</span>
-        <div class="report-title">Markdown</div>
-        <div class="report-desc">MD format for GitHub, docs, or editors</div>
+    st.markdown("""
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:24px 0;">
+        <div class="report-card">
+            <span class="report-icon">📄</span>
+            <div class="report-title">Plain Text</div>
+            <div class="report-desc">Clean text report with all analysis data</div>
+        </div>
+        <div class="report-card">
+            <span class="report-icon">🌐</span>
+            <div class="report-title">HTML Report</div>
+            <div class="report-desc">Styled web report, open in any browser</div>
+        </div>
+        <div class="report-card">
+            <span class="report-icon">📝</span>
+            <div class="report-title">Markdown</div>
+            <div class="report-desc">MD format for GitHub, docs, or editors</div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns(3)
+    safe_role = role.replace(" ", "_")
     with c1:
-        st.download_button("⬇️ Download TXT", data=txt_report, file_name=f"resume_report_{role.replace(' ', '_')}.txt", mime="text/plain", use_container_width=True)
+        st.download_button("⬇️ Download TXT", data=txt_report, file_name=f"resume_report_{safe_role}.txt", mime="text/plain", use_container_width=True)
     with c2:
-        st.download_button("⬇️ Download HTML", data=html_report, file_name=f"resume_report_{role.replace(' ', '_')}.html", mime="text/html", use_container_width=True)
+        st.download_button("⬇️ Download HTML", data=html_report, file_name=f"resume_report_{safe_role}.html", mime="text/html", use_container_width=True)
     with c3:
-        st.download_button("⬇️ Download Markdown", data=md_report, file_name=f"resume_report_{role.replace(' ', '_')}.md", mime="text/markdown", use_container_width=True)
+        st.download_button("⬇️ Download Markdown", data=md_report, file_name=f"resume_report_{safe_role}.md", mime="text/markdown", use_container_width=True)
 
     preview_exp = safe_expander("👁️ Report Preview", "report_preview")
     if preview_exp:
@@ -1421,6 +1467,7 @@ def main():
         "report": render_report_download,
     }
     routes.get(page, render_home)()
+
 
 if __name__ == "__main__":
     main()
